@@ -359,6 +359,7 @@ h1 { margin: 0; font-size: clamp(36px, 6vw, 60px); line-height: 1.04; letter-spa
 .none { color: var(--line-strong); }
 .trend-up { color: var(--up); }
 .sub { display: block; color: var(--muted); font-size: 11.5px; font-weight: 450; }
+.sub .registry { font-weight: 600; letter-spacing: .01em; }
 
 .spark { display: block; margin-left: auto; color: var(--accent); }
 .spark rect { fill: currentColor; }
@@ -551,7 +552,7 @@ h1 { margin: 0; font-size: clamp(36px, 6vw, 60px); line-height: 1.04; letter-spa
   .ranking td.num ~ td.num { border-left: 1px solid var(--line); }
   .hero { padding: 28px 0 12px; }
   .lede { font-size: 16px; }
-  .growth small, .sub { display: inline; margin-left: 4px; }
+  .growth small { display: inline; margin-left: 4px; }
   .spark { margin-left: 0; }
   .agent { min-width: 0; }
   .agent-desc { -webkit-line-clamp: 3; }

@@ -292,7 +292,8 @@ const COLUMNS = {
       const change = downloads ? downloadChange(downloads) : null
 
       return el('td', { class: 'num', 'data-label': 'Downloads' }, downloads
-        ? [el('span', { title: `${whole.format(downloads.last30)} downloads on ${downloads.registry} in the last 30 days` }, compact.format(downloads.last30)), change !== null ? el('span', { class: `sub${change > 0 ? ' trend-up' : ''}` }, `${change > 0 ? '+' : ''}${change}%`) : null]
+        ? [el('span', { title: `${whole.format(downloads.last30)} downloads of ${downloads.registry === 'npm' ? agent.packages?.npm : agent.packages?.pypi} on ${downloads.registry} in the last 30 days` }, compact.format(downloads.last30)),
+            el('span', { class: 'sub' }, el('span', { class: 'registry' }, downloads.registry), change !== null ? el('span', { class: change > 0 ? 'trend-up' : '' }, ` ${change > 0 ? '+' : ''}${change}%`) : null)]
         : none('No package on npm or PyPI'))
     },
   },
@@ -312,7 +313,9 @@ const COLUMNS = {
 const PACKAGED = new Set(['runtime', 'adapter', 'framework'])
 const columnsFor = kind => (PACKAGED.has(kind)
   ? ['rank', 'agent', 'stars', 'growth', 'downloads', 'activity', 'forks', 'lang', 'updated']
-  : ['rank', 'agent', 'stars', 'growth', 'activity', 'forks', 'issues', 'lang', 'updated'])
+  : kind === 'all'
+    ? ['rank', 'agent', 'stars', 'growth', 'downloads', 'activity', 'forks', 'issues', 'lang', 'updated']
+    : ['rank', 'agent', 'stars', 'growth', 'activity', 'forks', 'issues', 'lang', 'updated'])
 
 const sortBy = id => {
   const sort = SORTS[id]
