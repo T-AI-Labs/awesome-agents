@@ -1,0 +1,8 @@
+[
+  { "repo": "wshobson/agents", "name": "wshobson/agents", "category": "software" },
+  { "repo": "VoltAgent/awesome-claude-code-subagents", "name": "Awesome Claude Code Subagents", "category": "software", "include": "^categories/" },
+  { "repo": "davepoon/buildwithclaude", "name": "Build with Claude", "category": "software" },
+  { "repo": "vijaythecoder/awesome-claude-agents", "name": "Awesome Claude Agents", "category": "software" },
+  { "repo": "lst97/claude-code-sub-agents", "name": "Claude Code Sub-Agents", "category": "software" },
+  { "repo": "0xfurai/claude-code-subagents", "name": "Claude Code Subagents", "category": "software" }
+]

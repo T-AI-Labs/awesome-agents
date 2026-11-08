@@ -1,0 +1,8 @@
+[
+  { "id": "role", "label": "Roles", "one": "Role", "description": "Job-ready agents from Paperclip companies. Import one into your company with a single command." },
+  { "id": "subagent", "label": "Subagents", "one": "Subagent", "description": "Specialist agent files for Claude Code. Drop one into .claude/agents and it is ready." },
+  { "id": "runtime", "label": "Runtimes", "one": "Runtime", "description": "Agents you run: coding CLIs and assistants. Many power Paperclip employees through an adapter." },
+  { "id": "adapter", "label": "Adapters", "one": "Adapter", "description": "Community plugins that connect more runtimes and models to Paperclip." },
+  { "id": "framework", "label": "Frameworks", "one": "Framework", "description": "Libraries and SDKs for building your own agents." },
+  { "id": "project", "label": "Projects", "one": "Project", "description": "The most-starred agent projects on GitHub: skills, plugins, memory, tooling and more." }
+]

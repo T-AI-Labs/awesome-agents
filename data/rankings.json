@@ -1,0 +1,6 @@
+[
+  { "id": "ai-agents", "label": "AI Agents", "query": "AI Agents" },
+  { "id": "claude", "label": "Claude", "query": "Claude" },
+  { "id": "claude-code", "label": "Claude Code", "query": "Claude Code" },
+  { "id": "paperclip", "label": "Paperclip", "query": "paperclip agents" }
+]

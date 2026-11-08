@@ -1,0 +1,29 @@
+name: Suggest an agent
+description: A runtime, framework, subagent collection or adapter that belongs on the list
+labels: [suggestion]
+body:
+  - type: input
+    id: repository
+    attributes:
+      label: Repository or package
+      description: The GitHub repository, or the npm package for a Paperclip adapter.
+      placeholder: owner/repo
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - Runtime
+        - Framework
+        - Subagent collection
+        - Paperclip adapter
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it belongs here
+      description: One or two sentences on what it does and where it runs.

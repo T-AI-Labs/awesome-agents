@@ -1,0 +1,9 @@
+[
+  { "id": "software", "label": "Software", "description": "coding, testing, DevOps and architecture" },
+  { "id": "data", "label": "Data & AI", "description": "data engineering, analytics, ML and prompts" },
+  { "id": "security", "label": "Security", "description": "audits, pentesting and compliance" },
+  { "id": "research", "label": "Research", "description": "science, papers and intelligence" },
+  { "id": "creative", "label": "Design & content", "description": "design, writing, media and games" },
+  { "id": "business", "label": "Business", "description": "product, marketing, sales, finance and leadership" },
+  { "id": "general", "label": "General", "description": "general-purpose assistants and agent building" }
+]

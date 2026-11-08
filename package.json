@@ -1,0 +1,14 @@
+{
+  "name": "awesome-agents",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fetch": "node scripts/fetch.mjs results/agents.json",
+    "assemble": "node scripts/assemble.mjs results/agents.json public",
+    "readme": "node scripts/readme.mjs results/agents.json",
+    "serve": "node scripts/serve.mjs public"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

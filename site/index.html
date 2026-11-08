@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Awesome Agents: Every AI Agent, Ranked and Ready to Use</title>
+  <meta name="description" content="Roles, Claude Code subagents, runtimes, Paperclip adapters, frameworks and the top agent projects on GitHub. Filter by where they run, sort by stars, growth and activity, and copy the command to use one.">
+  <link rel="canonical" href="https://t-ai-labs.github.io/awesome-agents/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Awesome Agents">
+  <meta property="og:description" content="Every AI agent, ranked: filter by where it runs, sort by stars, growth and activity.">
+  <meta property="og:url" content="https://t-ai-labs.github.io/awesome-agents/">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script>try { const t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t } catch {}</script>
+</head>
+<body>
+  <a class="skip" href="#results">Skip to the list</a>
+
+  <header class="top">
+    <div class="top-inner">
+      <a class="brand" href="./" aria-label="Awesome Agents, home">
+        <img src="favicon.svg" width="28" height="28" alt="">
+        <span>Awesome Agents</span>
+      </a>
+      <nav class="top-links" aria-label="Main">
+        <a href="#how">How it works</a>
+        <a href="https://github.com/T-AI-Labs/awesome-agents/issues/new?template=suggest-agent.yml">Suggest an agent</a>
+        <a href="https://github.com/T-AI-Labs/awesome-agents" aria-label="GitHub">
+          <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.23 1.88.87 2.34.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          <span class="wide-only">GitHub</span>
+        </a>
+        <button class="icon-button" id="theme" type="button" aria-label="Switch between light and dark">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm0 2v14a7 7 0 0 0 0-14Z" fill="currentColor" fill-rule="evenodd"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow" id="eyebrow">&nbsp;</p>
+      <h1>Every AI agent, ranked.</h1>
+      <p class="lede">Roles, subagents, runtimes, adapters, frameworks and the top agent projects on GitHub. Filter by where an agent runs, sort by stars, growth or activity, and copy the one command that puts it to work.</p>
+    </section>
+
+    <nav class="kinds" id="kinds" aria-label="Kind of agent"></nav>
+    <p class="kind-note" id="kind-note"></p>
+
+    <section class="finder" aria-label="Find an agent">
+      <div class="search">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input id="search" type="search" placeholder="Search by name, job, skill or repository" aria-label="Search agents" autocomplete="off" spellcheck="false">
+        <kbd aria-hidden="true">/</kbd>
+      </div>
+      <div class="runs" role="group" aria-labelledby="runs-label">
+        <span class="runs-label" id="runs-label">Runs in</span>
+        <div class="runs-chips" id="runs"></div>
+      </div>
+      <div class="pickers">
+        <label class="pick"><span>Category</span><select id="category"></select></label>
+        <label class="pick"><span>Top 100</span><select id="list"></select></label>
+        <label class="pick"><span>Updated</span>
+          <select id="updated">
+            <option value="any">Any time</option>
+            <option value="7">Past week</option>
+            <option value="30">Past month</option>
+            <option value="365">Past year</option>
+          </select>
+        </label>
+        <label class="pick"><span>Sort</span><select id="sort"></select></label>
+      </div>
+    </section>
+
+    <div class="summary">
+      <p id="count" role="status" aria-live="polite"></p>
+      <button class="text-button" id="reset" type="button" hidden>Clear filters</button>
+    </div>
+
+    <div class="frame" id="results">
+      <table class="ranking">
+        <thead><tr id="head"></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <div class="more-wrap"><button class="more" id="more" type="button" hidden></button></div>
+
+    <section class="how" id="how">
+      <h2>How it works</h2>
+      <div class="how-grid">
+        <article><h3>Collected weekly</h3><p>Roles come from the import-tested companies of <a href="https://t-ai-labs.github.io/awesome-paperclip-companies/">Awesome Paperclip Companies</a>. Subagents come from openly licensed Claude Code collections, adapters from npm, projects from GitHub's top 100 searches for AI Agents, Claude, Claude Code and Paperclip. Runtimes and frameworks are picked by hand.</p></article>
+        <article><h3>Ranked by real numbers</h3><p>Stars, forks, open issues and the language come from GitHub. Activity counts commits on the default branch per week. Downloads come from npm and PyPI. GitHub no longer shares when a star was given, so growth is measured from our own weekly snapshots.</p></article>
+        <article><h3>Runs in</h3><p>Paperclip means you can import the role, hire the runtime through a built-in or community adapter, or install the adapter. Claude Code means a subagent file or a project that says it works there. For projects this is read from their description and topics, so check before you rely on it.</p></article>
+      </div>
+      <p class="fine">Stars of a role or subagent belong to the project it comes from. A popular repository does not prove that an agent does good work, and nothing here is a security review: agents act with the access you give them, so read one before you use it.</p>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p>An independent list, not affiliated with Anthropic, Paperclip or any project listed. Names and texts belong to their authors and stay under their licenses; every entry links its source. <span id="generated"></span></p>
+  </footer>
+
+  <div class="scrim" id="scrim" hidden></div>
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" hidden tabindex="-1"></aside>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
