@@ -104,7 +104,7 @@ The 20 most downloaded community adapters on npm. [See all 74 →](https://t-ai-
 | 6 | [AutoGen](https://github.com/microsoft/autogen) | 61.7K | – | 405K | Python | Microsoft's framework for multi-agent conversations and event-driven agents. | 2026-10-28 |
 | 7 | [CrewAI](https://github.com/crewAIInc/crewAI) | 60.6K | – | 2.7M | Python | Orchestrate role-playing agents that work together as a crew. | 2026-11-08 |
 | 8 | [LlamaIndex](https://github.com/run-llama/llama_index) | 52.8K | – | 2.1M | Python | Framework for agents over your data: indexing, retrieval and workflows. | 2026-11-06 |
-| 9 | [LangGraph](https://github.com/langchain-ai/langgraph) | 44.6K | – | 55.8M | Python | Build resilient, stateful agents as graphs, with memory and human-in-the-loop. | 2026-11-08 |
+| 9 | [LangGraph](https://github.com/langchain-ai/langgraph) | 44.7K | – | 55.8M | Python | Build resilient, stateful agents as graphs, with memory and human-in-the-loop. | 2026-11-08 |
 | 10 | [Agno](https://github.com/agno-agi/agno) | 43.1K | – | 2.2M | Python | Fast framework and runtime for multi-agent systems with memory and knowledge. | 2026-11-08 |
 | 11 | [DSPy](https://github.com/stanfordnlp/dspy) | 39K | – | 5.4M | Python | Program language models instead of prompting them, and optimize the result. | 2026-11-08 |
 | 12 | [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) | 30.6K | – | 17.6M | Python | Lightweight, provider-agnostic framework for multi-agent workflows with handoffs and guardrails. | 2026-11-08 |
@@ -144,7 +144,7 @@ The most-starred projects from GitHub's top 100 searches for AI Agents, Claude, 
 | 9 | [cc-switch](https://github.com/farion1231/cc-switch) | 152.7K | 10K | Rust | 504 | Claude Code, Codex, OpenCode | A cross-platform desktop All-in-One assistant for Claude Code, Codex, OpenCode,DeepSeek… | 2026-11-08 |
 | 10 | [ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | 146.8K | 15.5K | Python | 41 | Claude Code, Codex, Cursor, Copilot | An AI skill that provides design intelligence for building professional UI/UX across… | 2026-11-07 |
 | 11 | [system-prompts-and-models-of-ai-tools](https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools) | 144.6K | 34.7K | – | 90 | Claude Code, Cursor, Copilot | FULL Augment Code, Claude Code, Cluely, CodeBuddy, Comet, Cursor, Devin AI, Junie, Kiro,… | 2026-10-12 |
-| 12 | [graphify](https://github.com/Graphify-Labs/graphify) | 144.3K | 13.8K | Python | 732 | Claude Code, Codex, Cursor, Gemini CLI, OpenClaw | Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable… | 2026-11-08 |
+| 12 | [graphify](https://github.com/Graphify-Labs/graphify) | 144.3K | 13.8K | Python | 733 | Claude Code, Codex, Cursor, Gemini CLI, OpenClaw | Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable… | 2026-11-08 |
 | 13 | [awesome-llm-apps](https://github.com/Shubhamsaboo/awesome-llm-apps) | 144.2K | 21.2K | Python | 2 | – | 100+ AI Agents, Agent Skills and RAG Apps - Free and Open Source. | 2026-11-06 |
 | 14 | [gstack](https://github.com/garrytan/gstack) | 140.7K | 20.8K | TypeScript | 55 | Claude Code, Paperclip | Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer,… | 2026-11-08 |
 | 15 | [orca](https://github.com/stablyai/orca) | 119.1K | 7.6K | TypeScript | 4.5K | Claude Code, Codex, OpenCode, OpenClaw | Orca lets you run a fleet of coding agents (e.g. Claude Code, Codex) with your own… | 2026-11-08 |
