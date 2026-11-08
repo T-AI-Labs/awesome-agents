@@ -21,11 +21,17 @@ export const graphql = async (query, attempt = 1) => {
   if (!response.ok) throw new Error(`GitHub GraphQL: HTTP ${response.status}`)
 
   const { data, errors } = await response.json()
-  const fatal = (errors ?? []).filter(error => error.type !== 'NOT_FOUND')
+  const fatal = (errors ?? []).filter(error => !['NOT_FOUND', 'FORBIDDEN'].includes(error.type) && !error.message?.includes('IP allow list'))
 
   if (fatal.length > 0) throw new Error(`GitHub GraphQL: ${fatal.map(error => error.message).join('; ')}`)
 
   return data
+}
+
+export const publicRepo = async repo => {
+  const response = await fetch(`https://api.github.com/repos/${repo}`, { headers: { accept: 'application/vnd.github+json' } })
+
+  return response.ok ? response.json() : null
 }
 
 const rawUrl = (repo, commit, path) => `https://raw.githubusercontent.com/${repo}/${commit}/${path.split('/').map(encodeURIComponent).join('/')}`

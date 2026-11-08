@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname } from 'node:path'
 
-import { api, blobsAt, each, graphql, isEnglish, isOpen, raw, rawUrl, split } from './github.mjs'
+import { api, blobsAt, each, graphql, isEnglish, isOpen, publicRepo, raw, rawUrl, split } from './github.mjs'
 
 const [outPath = 'results/agents.json'] = process.argv.slice(2)
 const COMPANIES = 'https://t-ai-labs.github.io/awesome-paperclip-companies/'
@@ -439,7 +439,29 @@ for (let start = 0; start < wanted.length; start += BATCH) {
     const answer = data[`r${index}`]
 
     if (answer) found.set(repo, answer)
-    else warn(`${repo}: not found on GitHub`)
+  })
+}
+
+// Orgs with an IP allow list refuse the Actions token, so read them without one
+for (const repo of wanted.filter(one => !found.has(one))) {
+  const answer = await publicRepo(repo)
+
+  if (!answer) {
+    warn(`${repo}: not found on GitHub`)
+    continue
+  }
+
+  found.set(repo, {
+    nameWithOwner: answer.full_name,
+    stargazerCount: answer.stargazers_count,
+    forkCount: answer.forks_count,
+    createdAt: answer.created_at,
+    pushedAt: answer.pushed_at,
+    isArchived: answer.archived,
+    homepageUrl: answer.homepage,
+    licenseInfo: answer.license && { spdxId: answer.license.spdx_id },
+    primaryLanguage: answer.language && { name: answer.language },
+    repositoryTopics: { nodes: (answer.topics ?? []).map(name => ({ topic: { name } })) },
   })
 }
 
