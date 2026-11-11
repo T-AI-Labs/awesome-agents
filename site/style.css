@@ -260,7 +260,7 @@ h1 { margin: 0; font-size: clamp(36px, 6vw, 60px); line-height: 1.04; letter-spa
 .host-chip[aria-pressed="true"] .dot { box-shadow: 0 0 0 2px var(--bg); }
 .host-chip:disabled { opacity: 0.45; cursor: default; }
 
-.pickers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.pickers { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
 
 .pick {
   position: relative;
@@ -508,6 +508,7 @@ h1 { margin: 0; font-size: clamp(36px, 6vw, 60px); line-height: 1.04; letter-spa
 
 @media (max-width: 900px) {
   .pickers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pick:last-child { grid-column: 1 / -1; }
   .how-grid { grid-template-columns: 1fr; }
   .wide-only { display: none; }
 }
