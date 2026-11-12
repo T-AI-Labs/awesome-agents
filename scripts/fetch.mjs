@@ -201,6 +201,8 @@ const curated = (kind, list) => list.map(entry => ({
   packages: { npm: entry.npm ?? null, pypi: entry.pypi ?? null },
   paperclip: entry.adapters ? { how: 'built-in', types: entry.adapters } : entry.community ? { how: 'community', packages: entry.community } : null,
   install: entry.install ? [{ label: 'Install', command: entry.install }] : [],
+  license: entry.license ?? null,
+  licenseKind: entry.licenseKind ?? null,
 }))
 
 const runtimes = curated('runtime', readJson('data/runtimes.json'))

@@ -79,7 +79,7 @@ const LANGUAGES = {
 }
 
 const PAGE = 50
-const DEFAULTS = { kind: 'all', query: '', host: 'any', category: 'all', list: 'any', updated: 'any', sort: 'popular', descending: true }
+const DEFAULTS = { kind: 'all', query: '', host: 'any', category: 'all', list: 'any', updated: 'any', license: 'any', sort: 'popular', descending: true }
 const state = { ...DEFAULTS, open: null }
 let shown = PAGE
 
@@ -88,6 +88,23 @@ const { agents, repos, kinds, categories, rankings } = data
 const kindOf = Object.fromEntries(kinds.map(kind => [kind.id, kind]))
 const categoryOf = Object.fromEntries(categories.map(category => [category.id, category]))
 const byId = new Map(agents.map(agent => [agent.id, agent]))
+
+const LICENSES = [
+  { id: 'open', label: 'Open source' },
+  { id: 'source', label: 'Source-available' },
+  { id: 'closed', label: 'Proprietary or none' },
+]
+const OPEN_LICENSE = /^(MIT|MIT-0|Apache-2\.0|BSD-[234]-Clause(-\w+)?|ISC|0BSD|Unlicense|CC0-1\.0|CC-BY(-SA)?-4\.0|A?GPL-[23]\.0(-only|-or-later)?|LGPL-(2\.1|3\.0)(-only|-or-later)?|MPL-2\.0|EPL-2\.0|Zlib|BSL-1\.0|Artistic-2\.0|Python-2\.0|PostgreSQL|WTFPL)$/i
+const SOURCE_AVAILABLE = /\b(FSL|BUSL|PolyForm|Elastic-2\.0|SSPL)/i
+const licenseKindOf = license => {
+  if (!license) return 'closed'
+
+  const choices = license.replace(/[()]/g, '').split(/\s+OR\s+/i)
+
+  if (choices.some(choice => choice.split(/\s+AND\s+/i).every(part => OPEN_LICENSE.test(part.trim())))) return 'open'
+
+  return SOURCE_AVAILABLE.test(license) ? 'source' : 'closed'
+}
 
 const initialsOf = name => {
   const words = name.match(/[\p{L}\p{N}]+/gu) ?? ['?']
@@ -141,6 +158,8 @@ for (const agent of agents) {
   agent.activity = repo?.commits ? sum(repo.commits) : -1
   agent.growthRate = repo?.growth ? repo.growth.gained / repo.growth.days : -1
   agent.dl = agent.downloads?.last30 ?? -1
+  agent.license ||= repo?.license
+  agent.licenseKind ??= licenseKindOf(agent.license)
   agent.updatedAt = repo?.pushed ?? agent.published?.modified ?? ''
   agent.createdAt = repo?.created ?? agent.published?.created ?? ''
   agent.initials = initialsOf(agent.name)
@@ -200,6 +219,7 @@ const matches = (agent, filter, skip) => {
   if (skip !== 'host' && filter.host !== 'any' && !agent.worksWith?.includes(filter.host)) return false
   if (skip !== 'category' && filter.category !== 'all' && agent.category !== filter.category) return false
   if (skip !== 'list' && filter.list !== 'any' && !agent.ranks?.[filter.list]) return false
+  if (skip !== 'license' && filter.license !== 'any' && agent.licenseKind !== filter.license) return false
   if (filter.updated !== 'any' && (!agent.updatedAt || daysSince(agent.updatedAt) > Number(filter.updated))) return false
 
   return filter.words.every(word => agent.haystack.includes(word))
@@ -393,6 +413,7 @@ const fillSelect = (select, options, value) => {
 const renderPickers = () => {
   const categoryCounts = countBy('category', agent => agent.category)
   const listCounts = countBy('list', agent => Object.keys(agent.ranks ?? {}))
+  const licenseCounts = countBy('license', agent => agent.licenseKind)
 
   fillSelect($('category'), [
     { value: 'all', label: `All (${whole.format(categoryCounts.get('*') ?? 0)})` },
@@ -404,6 +425,11 @@ const renderPickers = () => {
     ...rankings.map(ranking => ({ value: ranking.id, label: `${ranking.label} (${listCounts.get(ranking.id) ?? 0})` })),
   ], state.list)
 
+  fillSelect($('license'), [
+    { value: 'any', label: 'Any' },
+    ...LICENSES.map(license => ({ value: license.id, label: `${license.label} (${whole.format(licenseCounts.get(license.id) ?? 0)})` })),
+  ], state.license)
+
   const sorts = Object.entries(SORTS).filter(([id]) => (id !== 'rank' || state.list !== 'any') && (id !== 'downloads' || state.kind === 'all' || PACKAGED.has(state.kind)))
 
   fillSelect($('sort'), sorts.map(([id, sort]) => ({ value: id, label: sort.label })), state.sort)
@@ -411,7 +437,7 @@ const renderPickers = () => {
   $('updated').closest('.pick').classList.toggle('is-set', state.updated !== 'any')
 }
 
-const isFiltered = () => state.query !== '' || state.host !== 'any' || state.category !== 'all' || state.list !== 'any' || state.updated !== 'any' || state.kind !== 'all'
+const isFiltered = () => state.query !== '' || state.host !== 'any' || state.category !== 'all' || state.list !== 'any' || state.updated !== 'any' || state.license !== 'any' || state.kind !== 'all'
 
 const reset = () => {
   Object.assign(state, DEFAULTS)
@@ -448,6 +474,7 @@ const syncUrl = () => {
   if (state.category !== DEFAULTS.category) params.set('category', state.category)
   if (state.list !== DEFAULTS.list) params.set('list', state.list)
   if (state.updated !== DEFAULTS.updated) params.set('updated', state.updated)
+  if (state.license !== DEFAULTS.license) params.set('license', state.license)
   const listDefault = state.list !== 'any' && state.sort === 'rank' && !state.descending
 
   if (!listDefault && (state.sort !== DEFAULTS.sort || (SORTS[state.sort].value && state.descending !== Boolean(SORTS[state.sort].descending)))) params.set('sort',`${state.descending && SORTS[state.sort].value ? '-' : ''}${state.sort}`)
@@ -615,7 +642,7 @@ const renderDrawer = agent => {
           agent.downloads ? stat('Downloads', compact.format(agent.downloads.last30), change !== null ? `${change > 0 ? '+' : ''}${change}% · 30 days` : '30 days') : stat('Forks', agent.forks >= 0 ? whole.format(agent.forks) : null),
           stat('Open issues', agent.issues >= 0 ? whole.format(agent.issues) : null),
           stat('Language', agent.lang || null),
-          stat('License', agent.license || repo?.license || null),
+          stat('License', agent.license || null, LICENSES.find(license => license.id === agent.licenseKind)?.label),
           stat('Created', agent.createdAt ? longDate(agent.createdAt) : null),
           stat('Last update', agent.updatedAt ? ageOf(agent.updatedAt) : null),
           agent.kind === 'role' ? stat('Skills', String(agent.skills)) : agent.kind === 'subagent' ? stat('Model', agent.model || 'inherit') : stat('Forks', agent.downloads && agent.forks >= 0 ? whole.format(agent.forks) : null))),
@@ -695,6 +722,7 @@ const readUrl = () => {
   if (params.get('category') in categoryOf) state.category = params.get('category')
   if (rankings.some(ranking => ranking.id === params.get('list'))) state.list = params.get('list')
   if (['7', '30', '365'].includes(params.get('updated'))) state.updated = params.get('updated')
+  if (LICENSES.some(license => license.id === params.get('license'))) state.license = params.get('license')
   state.query = params.get('q') ?? ''
 
   if (id in SORTS) {
@@ -748,6 +776,12 @@ $('list').addEventListener('change', event => {
     state.descending = false
   }
 
+  shown = PAGE
+  render()
+})
+
+$('license').addEventListener('change', event => {
+  state.license = event.target.value
   shown = PAGE
   render()
 })
