@@ -5,13 +5,13 @@
 # Awesome Agents
 
 **Every AI agent, ranked.**<br>
-2,704 roles, subagents, runtimes, adapters, frameworks and top projects, filterable by where they run and sorted by stars, growth and activity.
+2,705 roles, subagents, runtimes, adapters, frameworks and top projects, filterable by where they run and sorted by stars, growth and activity.
 
-[![Agents](https://img.shields.io/badge/agents-2704-0f766e)](https://t-ai-labs.github.io/awesome-agents/)
+[![Agents](https://img.shields.io/badge/agents-2705-0f766e)](https://t-ai-labs.github.io/awesome-agents/)
 [![Updated weekly](https://img.shields.io/badge/updated-weekly-0f766e)](#how-it-works)
 [![License: MIT](https://img.shields.io/badge/license-MIT-555)](LICENSE)
 
-### [Browse all 2,704 agents →](https://t-ai-labs.github.io/awesome-agents/)
+### [Browse all 2,705 agents →](https://t-ai-labs.github.io/awesome-agents/)
 
 [Runs in Claude Code](https://t-ai-labs.github.io/awesome-agents/?runs=claude-code) &nbsp;·&nbsp; [Runs in Paperclip](https://t-ai-labs.github.io/awesome-agents/?runs=paperclip) &nbsp;·&nbsp; [Runtimes](#runtimes) &nbsp;·&nbsp; [Adapters](#paperclip-adapters) &nbsp;·&nbsp; [Frameworks](#frameworks) &nbsp;·&nbsp; [Top projects](#top-projects)
 
@@ -23,7 +23,7 @@
 | :--- | ---: | :--- | :--- |
 | [Roles](https://t-ai-labs.github.io/awesome-agents/?kind=role) | 1495 | Agents with a job, from import-tested Paperclip companies | `npx companies.sh add <company> --target existing --agents <role>` |
 | [Subagents](https://t-ai-labs.github.io/awesome-agents/?kind=subagent) | 797 | Specialist agent files for Claude Code | Save the file to `.claude/agents/` |
-| [Runtimes](https://t-ai-labs.github.io/awesome-agents/?kind=runtime) | 30 | Coding CLIs and assistants you run | Install it; many run Paperclip employees through an adapter |
+| [Runtimes](https://t-ai-labs.github.io/awesome-agents/?kind=runtime) | 31 | Coding CLIs and assistants you run | Install it; many run Paperclip employees through an adapter |
 | [Adapters](https://t-ai-labs.github.io/awesome-agents/?kind=adapter) | 74 | Community plugins that bring more runtimes to Paperclip | Paperclip → Settings → Adapters → Install from npm |
 | [Frameworks](https://t-ai-labs.github.io/awesome-agents/?kind=framework) | 30 | Libraries for building your own agents | `pip install` or `npm install` |
 | [Projects](https://t-ai-labs.github.io/awesome-agents/?kind=project) | 278 | The top 100 GitHub repositories for AI Agents, Claude, Claude Code and Paperclip | Read the project |
@@ -64,6 +64,7 @@ Every entry on the site has its command ready to copy.
 | 28 | [Mistral Vibe](https://github.com/mistralai/mistral-vibe) | 5.4K | – | 1.8M | community adapter | Mistral's command-line coding assistant. | 2026-11-10 |
 | 29 | [Kiro](https://github.com/kirodotdev/Kiro) | 4.5K | – | – | community adapter | Agentic IDE and CLI built around specs. Closed source; the repository tracks issues. | 2026-11-05 |
 | 30 | [Letta Code](https://github.com/letta-ai/letta-code) | 3.8K | – | 302.3K | community adapter | Memory-first coding agent that keeps learning across sessions. | 2026-11-12 |
+| 31 | [agent-qa](https://github.com/vostride/agent-qa) | 854 | – | 5.1K | – | Local QA agent that tests web, Android and iOS apps from plain-language instructions and keeps steps and… | 2026-11-11 |
 
 ## Paperclip adapters
 
