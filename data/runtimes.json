@@ -28,5 +28,6 @@
   { "id": "autogpt", "name": "AutoGPT", "repo": "Significant-Gravitas/AutoGPT", "category": "general", "description": "Platform to build, deploy and run continuous AI agents that automate workflows.", "license": "MIT AND PolyForm-Shield-1.0.0" },
   { "id": "openmanus", "name": "OpenManus", "repo": "FoundationAgents/OpenManus", "category": "general", "description": "Open-source general agent that plans and uses tools to finish tasks." },
   { "id": "swe-agent", "name": "SWE-agent", "repo": "SWE-agent/SWE-agent", "category": "software", "description": "Takes a GitHub issue and tries to fix it automatically. Built by Princeton and Stanford researchers." },
-  { "id": "trae-agent", "name": "Trae Agent", "repo": "bytedance/trae-agent", "category": "software", "description": "ByteDance's research-friendly agent for general software engineering tasks." }
+  { "id": "trae-agent", "name": "Trae Agent", "repo": "bytedance/trae-agent", "category": "software", "description": "ByteDance's research-friendly agent for general software engineering tasks." },
+  { "id": "agent-qa", "name": "agent-qa", "repo": "vostride/agent-qa", "category": "software", "description": "Local QA agent that tests web, Android and iOS apps from plain-language instructions and keeps steps and screenshots as evidence.", "install": "npm install -g agent-qa", "npm": "agent-qa", "license": "FSL-1.1-ALv2" }
 ]
