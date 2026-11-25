@@ -79,7 +79,7 @@ const LANGUAGES = {
 }
 
 const PAGE = 50
-const DEFAULTS = { kind: 'all', query: '', host: 'any', category: 'all', list: 'any', updated: 'any', license: 'any', sort: 'popular', descending: true }
+const DEFAULTS = { kind: 'all', query: '', host: 'any', category: 'all', list: 'any', stars: 'any', updated: 'any', license: 'any', sort: 'popular', descending: true }
 const state = { ...DEFAULTS, open: null }
 let shown = PAGE
 
@@ -220,6 +220,7 @@ const matches = (agent, filter, skip) => {
   if (skip !== 'category' && filter.category !== 'all' && agent.category !== filter.category) return false
   if (skip !== 'list' && filter.list !== 'any' && !agent.ranks?.[filter.list]) return false
   if (skip !== 'license' && filter.license !== 'any' && agent.licenseKind !== filter.license) return false
+  if (filter.stars !== 'any' && agent.stars < Number(filter.stars)) return false
   if (filter.updated !== 'any' && (!agent.updatedAt || daysSince(agent.updatedAt) > Number(filter.updated))) return false
 
   return filter.words.every(word => agent.haystack.includes(word))
@@ -433,11 +434,13 @@ const renderPickers = () => {
   const sorts = Object.entries(SORTS).filter(([id]) => (id !== 'rank' || state.list !== 'any') && (id !== 'downloads' || state.kind === 'all' || PACKAGED.has(state.kind)))
 
   fillSelect($('sort'), sorts.map(([id, sort]) => ({ value: id, label: sort.label })), state.sort)
+  $('stars').value = state.stars
+  $('stars').closest('.pick').classList.toggle('is-set', state.stars !== 'any')
   $('updated').value = state.updated
   $('updated').closest('.pick').classList.toggle('is-set', state.updated !== 'any')
 }
 
-const isFiltered = () => state.query !== '' || state.host !== 'any' || state.category !== 'all' || state.list !== 'any' || state.updated !== 'any' || state.license !== 'any' || state.kind !== 'all'
+const isFiltered = () => state.query !== '' || state.host !== 'any' || state.category !== 'all' || state.list !== 'any' || state.stars !== 'any' || state.updated !== 'any' || state.license !== 'any' || state.kind !== 'all'
 
 const reset = () => {
   Object.assign(state, DEFAULTS)
@@ -473,6 +476,7 @@ const syncUrl = () => {
   if (state.host !== DEFAULTS.host) params.set('runs', state.host)
   if (state.category !== DEFAULTS.category) params.set('category', state.category)
   if (state.list !== DEFAULTS.list) params.set('list', state.list)
+  if (state.stars !== DEFAULTS.stars) params.set('stars', state.stars)
   if (state.updated !== DEFAULTS.updated) params.set('updated', state.updated)
   if (state.license !== DEFAULTS.license) params.set('license', state.license)
   const listDefault = state.list !== 'any' && state.sort === 'rank' && !state.descending
@@ -721,6 +725,7 @@ const readUrl = () => {
   if (HOSTS.some(host => host.id === params.get('runs'))) state.host = params.get('runs')
   if (params.get('category') in categoryOf) state.category = params.get('category')
   if (rankings.some(ranking => ranking.id === params.get('list'))) state.list = params.get('list')
+  if (['10', '100', '1000', '10000'].includes(params.get('stars'))) state.stars = params.get('stars')
   if (['7', '30', '365'].includes(params.get('updated'))) state.updated = params.get('updated')
   if (LICENSES.some(license => license.id === params.get('license'))) state.license = params.get('license')
   state.query = params.get('q') ?? ''
@@ -782,6 +787,12 @@ $('list').addEventListener('change', event => {
 
 $('license').addEventListener('change', event => {
   state.license = event.target.value
+  shown = PAGE
+  render()
+})
+
+$('stars').addEventListener('change', event => {
+  state.stars = event.target.value
   shown = PAGE
   render()
 })
