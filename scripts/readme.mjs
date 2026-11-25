@@ -155,7 +155,7 @@ A weekly GitHub Action collects everything again and publishes the site.
 
 [Open an issue](${REPO}/issues/new?template=suggest-agent.yml) with the repository, or a pull request that adds it to one of the files in \`data/\`.
 
-A tool needs at least 1,000 GitHub stars, a commit in the last three months and a repository that is not archived. Smaller projects can still appear under Projects once they reach the weekly GitHub searches.
+Anything that fits one of the kinds can be added, whatever its size. The rankings sort it by stars, growth and activity, and the Stars filter on the site hides small projects if you prefer.
 
 ## License
 
