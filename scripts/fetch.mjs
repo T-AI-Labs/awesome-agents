@@ -188,7 +188,7 @@ for (const collection of readJson('data/collections.json')) {
   console.log(`  ${collection.repo}: ${kept} of ${files.length} files`)
 }
 
-console.log('Runtimes and frameworks')
+console.log('Runtimes, frameworks and tools')
 
 const curated = (kind, list) => list.map(entry => ({
   id: entry.id,
@@ -207,6 +207,7 @@ const curated = (kind, list) => list.map(entry => ({
 
 const runtimes = curated('runtime', readJson('data/runtimes.json'))
 const frameworks = curated('framework', readJson('data/frameworks.json'))
+const tools = curated('tool', readJson('data/tools.json'))
 
 console.log('Paperclip adapters on npm')
 
@@ -324,9 +325,9 @@ const adapters = (await each(adapterCandidates, async found => {
 
 console.log('  downloads from npm')
 
-const npmDownloads = await npmDownloadsFor([...new Set([...adapters, ...runtimes, ...frameworks].map(entry => entry.packages.npm).filter(Boolean))])
+const npmDownloads = await npmDownloadsFor([...new Set([...adapters, ...runtimes, ...frameworks, ...tools].map(entry => entry.packages.npm).filter(Boolean))])
 
-for (const entry of [...adapters, ...runtimes, ...frameworks]) {
+for (const entry of [...adapters, ...runtimes, ...frameworks, ...tools]) {
   if (!entry.packages.npm) continue
   entry.downloads = npmDownloads.get(entry.packages.npm) ?? null
   if (entry.downloads === null) warn(`npm ${entry.packages.npm}: no downloads`)
@@ -350,7 +351,7 @@ console.log('Top 100 rankings from GitHub search')
 const rankings = readJson('data/rankings.json')
 const projects = []
 const RANKED = 100
-const byRepo = new Map([...runtimes, ...frameworks, ...adapters].filter(entry => entry.repo).map(entry => [entry.repo.toLowerCase(), entry]))
+const byRepo = new Map([...runtimes, ...frameworks, ...tools, ...adapters].filter(entry => entry.repo).map(entry => [entry.repo.toLowerCase(), entry]))
 const roleRepos = new Map(roles.map(role => [role.repo.toLowerCase(), role.from]))
 const collectionRepos = new Set(subagents.map(agent => agent.repo.toLowerCase()))
 
@@ -402,7 +403,7 @@ for (const ranking of rankings) {
 
 console.log(`  ${projects.length} projects not listed elsewhere`)
 
-const all = [...roles, ...subagents, ...runtimes, ...adapters, ...frameworks, ...projects]
+const all = [...roles, ...subagents, ...runtimes, ...adapters, ...frameworks, ...tools, ...projects]
 
 console.log('Downloads from PyPI')
 
@@ -529,7 +530,7 @@ for (const entry of all) {
   if (entry.paperclip) hosts.add('paperclip')
   if (entry.subagents) hosts.add('claude-code')
 
-  if (entry.kind === 'project') {
+  if (entry.kind === 'project' || entry.kind === 'tool') {
     const about = `${entry.name} ${entry.description} ${(repos[entry.repo]?.topics ?? []).join(' ')}`
 
     for (const [host, home, words] of HOSTS) if (entry.repo !== home && words.test(about)) hosts.add(host)
