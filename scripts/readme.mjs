@@ -19,6 +19,7 @@ const dayOf = date => (date ? date.slice(0, 10) : '–')
 const link = agent => (agent.repo ? `[${cell(agent.name)}](https://github.com/${agent.repo})` : `[${cell(agent.name)}](${agent.url})`)
 const count = kind => agents.filter(agent => agent.kind === kind).length
 
+const HOST_LABELS = { 'claude-code': 'Claude Code', paperclip: 'Paperclip', codex: 'Codex', cursor: 'Cursor', 'gemini-cli': 'Gemini CLI', opencode: 'OpenCode', copilot: 'Copilot', openclaw: 'OpenClaw' }
 const PAPERCLIP = { 'built-in': 'built-in adapter', community: 'community adapter', plugin: 'adapter plugin', company: 'as a company', import: 'import' }
 
 const table = (header, rows) => [
@@ -39,13 +40,16 @@ const frameworks = table(['#', 'Framework', 'Stars', 'Growth', 'Downloads / 30d'
   repos[agent.repo]?.language ?? '–', cell(short(agent.description)), dayOf(repos[agent.repo]?.pushed),
 ]))
 
+const tools = table(['#', 'Tool', 'Stars', 'Growth', 'Downloads / 30d', 'Runs in', 'Description', 'Last commit'], byStars('tool').map((agent, index) => [
+  index + 1, link(agent), compact.format(starsOf(agent)), growthOf(agent), agent.downloads ? compact.format(agent.downloads.last30) : '–',
+  (agent.worksWith ?? []).map(host => HOST_LABELS[host]).join(', ') || '–', cell(short(agent.description)), dayOf(repos[agent.repo]?.pushed),
+]))
+
 const adapters = table(['#', 'Adapter', 'Package', 'Downloads / 30d', 'Description', 'Released'], agents
   .filter(agent => agent.kind === 'adapter')
   .sort((a, b) => (b.downloads?.last30 ?? 0) - (a.downloads?.last30 ?? 0))
   .slice(0, 20)
   .map((agent, index) => [index + 1, cell(agent.name), `[\`${agent.packages.npm}\`](${agent.url})`, compact.format(agent.downloads?.last30 ?? 0), cell(short(agent.description, 90)), dayOf(agent.published?.modified)]))
-
-const HOST_LABELS = { 'claude-code': 'Claude Code', paperclip: 'Paperclip', codex: 'Codex', cursor: 'Cursor', 'gemini-cli': 'Gemini CLI', opencode: 'OpenCode', copilot: 'Copilot', openclaw: 'OpenClaw' }
 
 const projects = table(['#', 'Project', 'Stars', 'Forks', 'Language', 'Open issues', 'Runs in', 'Description', 'Last commit'], byStars('project').slice(0, 30).map((agent, index) => {
   const repo = repos[agent.repo] ?? {}
@@ -72,7 +76,7 @@ const readme = `<div align="center">
 # Awesome Agents
 
 **Every AI agent, ranked.**<br>
-${agents.length.toLocaleString('en')} roles, subagents, runtimes, adapters, frameworks and top projects, filterable by where they run and sorted by stars, growth and activity.
+${agents.length.toLocaleString('en')} roles, subagents, runtimes, adapters, frameworks, tools and top projects, filterable by where they run and sorted by stars, growth and activity.
 
 [![Agents](https://img.shields.io/badge/agents-${agents.length}-0f766e)](${SITE})
 [![Updated weekly](https://img.shields.io/badge/updated-weekly-0f766e)](#how-it-works)
@@ -80,7 +84,7 @@ ${agents.length.toLocaleString('en')} roles, subagents, runtimes, adapters, fram
 
 ### [Browse all ${agents.length.toLocaleString('en')} agents →](${SITE})
 
-[Runs in Claude Code](${SITE}?runs=claude-code) &nbsp;·&nbsp; [Runs in Paperclip](${SITE}?runs=paperclip) &nbsp;·&nbsp; [Runtimes](#runtimes) &nbsp;·&nbsp; [Adapters](#paperclip-adapters) &nbsp;·&nbsp; [Frameworks](#frameworks) &nbsp;·&nbsp; [Top projects](#top-projects)
+[Runs in Claude Code](${SITE}?runs=claude-code) &nbsp;·&nbsp; [Runs in Paperclip](${SITE}?runs=paperclip) &nbsp;·&nbsp; [Runtimes](#runtimes) &nbsp;·&nbsp; [Adapters](#paperclip-adapters) &nbsp;·&nbsp; [Frameworks](#frameworks) &nbsp;·&nbsp; [Tools](#tools) &nbsp;·&nbsp; [Top projects](#top-projects)
 
 </div>
 
@@ -93,6 +97,7 @@ ${agents.length.toLocaleString('en')} roles, subagents, runtimes, adapters, fram
 | [Runtimes](${SITE}?kind=runtime) | ${count('runtime')} | Coding CLIs and assistants you run | Install it; many run Paperclip employees through an adapter |
 | [Adapters](${SITE}?kind=adapter) | ${count('adapter')} | Community plugins that bring more runtimes to Paperclip | Paperclip → Settings → Adapters → Install from npm |
 | [Frameworks](${SITE}?kind=framework) | ${count('framework')} | Libraries for building your own agents | \`pip install\` or \`npm install\` |
+| [Tools](${SITE}?kind=tool) | ${count('tool')} | Software that runs, hosts, routes or watches agents | Install it next to the agents you already use |
 | [Projects](${SITE}?kind=project) | ${count('project')} | The top 100 GitHub repositories for AI Agents, Claude, Claude Code and Paperclip | Read the project |
 
 Every entry on the site has its command ready to copy.
@@ -110,6 +115,12 @@ ${adapters}
 ## Frameworks
 
 ${frameworks}
+
+## Tools
+
+Agent workspaces, gateways, sandboxes and observability: software around agents that is not an agent itself.
+
+${tools}
 
 ## Top projects
 
@@ -133,16 +144,18 @@ A weekly GitHub Action collects everything again and publishes the site.
 
 - **Roles** come from the companies listed by [Awesome Paperclip Companies](https://t-ai-labs.github.io/awesome-paperclip-companies/), which import-tests each one.
 - **Subagents** come from openly licensed Claude Code collections in [\`data/collections.json\`](data/collections.json).
-- **Runtimes** and **frameworks** are picked by hand in [\`data/runtimes.json\`](data/runtimes.json) and [\`data/frameworks.json\`](data/frameworks.json).
+- **Runtimes**, **frameworks** and **tools** are picked by hand in [\`data/runtimes.json\`](data/runtimes.json), [\`data/frameworks.json\`](data/frameworks.json) and [\`data/tools.json\`](data/tools.json).
 - **Adapters** are found by searching npm for Paperclip adapters. Shared helper libraries and verbatim forks are left out.
 - **Projects** are the top 100 results of the GitHub searches in [\`data/rankings.json\`](data/rankings.json).
 - **Growth** is measured from star snapshots kept in [\`data/history.json\`](data/history.json), because GitHub no longer shares when a star was given. **Activity** counts weekly commits on the default branch; **downloads** come from npm and PyPI.
 
-"Runs in" is exact for roles, subagents, runtimes and adapters. For projects it is read from their description and topics.
+"Runs in" is exact for roles, subagents, runtimes and adapters. For tools and projects it is read from their description and topics.
 
 ## Suggest an agent
 
 [Open an issue](${REPO}/issues/new?template=suggest-agent.yml) with the repository, or a pull request that adds it to one of the files in \`data/\`.
+
+A tool needs at least 1,000 GitHub stars, a commit in the last three months and a repository that is not archived. Smaller projects can still appear under Projects once they reach the weekly GitHub searches.
 
 ## License
 

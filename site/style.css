@@ -20,6 +20,7 @@
   --k-runtime: #4338ca;
   --k-adapter: #7e22ce;
   --k-framework: #0369a1;
+  --k-tool: #be185d;
   --k-project: #57534e;
   --h-claude-code: #c96442;
   --h-paperclip: #0f766e;
@@ -58,6 +59,7 @@
     --k-runtime: #a5b4fc;
     --k-adapter: #d8b4fe;
     --k-framework: #7dd3fc;
+    --k-tool: #f9a8d4;
     --k-project: #d6d3d1;
     --h-claude-code: #e8916f;
     --h-paperclip: #2dd4bf;
@@ -93,6 +95,7 @@
   --k-runtime: #a5b4fc;
   --k-adapter: #d8b4fe;
   --k-framework: #7dd3fc;
+  --k-tool: #f9a8d4;
   --k-project: #d6d3d1;
   --h-claude-code: #e8916f;
   --h-paperclip: #2dd4bf;

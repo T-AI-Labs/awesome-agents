@@ -4,5 +4,6 @@
   { "id": "runtime", "label": "Runtimes", "one": "Runtime", "description": "Agents you run: coding CLIs and assistants. Many power Paperclip employees through an adapter." },
   { "id": "adapter", "label": "Adapters", "one": "Adapter", "description": "Community plugins that connect more runtimes and models to Paperclip." },
   { "id": "framework", "label": "Frameworks", "one": "Framework", "description": "Libraries and SDKs for building your own agents." },
+  { "id": "tool", "label": "Tools", "one": "Tool", "description": "Software that runs, hosts, routes or watches agents without being one: agent workspaces, gateways, sandboxes and observability." },
   { "id": "project", "label": "Projects", "one": "Project", "description": "The most-starred agent projects on GitHub: skills, plugins, memory, tooling and more." }
 ]

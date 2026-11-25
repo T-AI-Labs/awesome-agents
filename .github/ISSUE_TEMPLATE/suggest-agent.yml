@@ -1,5 +1,5 @@
 name: Suggest an agent
-description: A runtime, framework, subagent collection or adapter that belongs on the list
+description: A runtime, framework, tool, subagent collection or adapter that belongs on the list
 labels: [suggestion]
 body:
   - type: input
@@ -17,6 +17,7 @@ body:
       options:
         - Runtime
         - Framework
+        - Tool
         - Subagent collection
         - Paperclip adapter
         - Something else

@@ -330,7 +330,7 @@ const COLUMNS = {
   updated: { label: 'Updated', sort: 'updated', num: true, title: 'Last push to the repository, or the last release on npm', cell: agent => el('td', { class: 'num', 'data-label': 'Updated' }, agent.updatedAt ? el('span', { title: longDate(agent.updatedAt) }, ageOf(agent.updatedAt)) : none()) },
 }
 
-const PACKAGED = new Set(['runtime', 'adapter', 'framework'])
+const PACKAGED = new Set(['runtime', 'adapter', 'framework', 'tool'])
 const columnsFor = kind => (PACKAGED.has(kind)
   ? ['rank', 'agent', 'stars', 'growth', 'downloads', 'activity', 'forks', 'lang', 'updated']
   : kind === 'all'
