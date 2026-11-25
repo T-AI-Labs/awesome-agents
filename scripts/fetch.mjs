@@ -365,6 +365,9 @@ for (const ranking of rankings) {
     for (const node of data.search.nodes) {
       rank++
 
+      // GitHub search returns null for a result it hides, such as a blocked repository.
+      if (node === null) continue
+
       const key = node.nameWithOwner.toLowerCase()
       const known = byRepo.get(key)
 
