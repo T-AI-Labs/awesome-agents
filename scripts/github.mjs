@@ -5,9 +5,10 @@ import yaml from 'js-yaml'
 const token = process.env.GITHUB_TOKEN || execFileSync('gh', ['auth', 'token'], { encoding: 'utf8' }).trim()
 const headers = { authorization: `Bearer ${token}`, accept: 'application/vnd.github+json' }
 
-export const api = async path => {
+export const api = async (path, attempt = 1) => {
   const response = await fetch(`https://api.github.com/${path}`, { headers })
 
+  if (response.status >= 500 && attempt < 4) return api(path, attempt + 1)
   if (response.status === 404 || response.status === 409) return null
   if (!response.ok) throw new Error(`GitHub ${path}: HTTP ${response.status}`)
 
